@@ -1,0 +1,78 @@
+{
+  "manifest-version": "1",
+  "compiler-version": "0.34.0",
+  "language-version": "0.26.0",
+  "runtime-version": "0.19.0",
+  "compiler": {
+    "type": "directory",
+    "contract-info.json": {
+      "type": "file",
+      "size": 3854,
+      "hash": "06a949b9b1c38a8702025f759e56bd696173eaea303a0b83168fc33458376d06"
+    }
+  },
+  "contract": {
+    "type": "directory",
+    "index.d.ts": {
+      "type": "file",
+      "size": 3212,
+      "hash": "45462b8a2ce761a94c7d37fbae09e1d1a32f860560aebe9abcb71db3c28f05a1"
+    },
+    "index.js": {
+      "type": "file",
+      "size": 75641,
+      "hash": "337fbb2f605618fa97f17cf40d6d00021862d9935a513781862acc8f25dafe14"
+    },
+    "index.js.map": {
+      "type": "file",
+      "size": 2759,
+      "hash": "4da50f926c482bd2d6a15988a6133760e642b3fe58c5cb04d4cc30cc45c62374"
+    }
+  },
+  "zkir": {
+    "type": "directory",
+    "cast_ballot.bzkir": {
+      "type": "file",
+      "size": 930,
+      "hash": "d407ecda390d6b75acf5622d2f4cdae54429a2cc90d25869834d05ffb8f20763"
+    },
+    "cast_ballot.zkir": {
+      "type": "file",
+      "size": 12793,
+      "hash": "3a7517c702f7ae2a5731a82771c25af2b20b7afddf078f633c426b0fe059608b"
+    },
+    "register_voter.bzkir": {
+      "type": "file",
+      "size": 312,
+      "hash": "c9d01c0247e912b4d67c766042a7fa6889531260cc4cca62ce52c77101d2e388"
+    },
+    "register_voter.zkir": {
+      "type": "file",
+      "size": 4857,
+      "hash": "4a795f9a9332bcaa82f0dfd736147f46f1e33f30e629f22197394454ce9ec133"
+    }
+  },
+  "keys": {
+    "type": "directory",
+    "cast_ballot.prover": {
+      "type": "file",
+      "size": 5216649,
+      "hash": "db2cc099458c685016aa401a621b436036dee1e413e8decaff027ca4a9772b97"
+    },
+    "cast_ballot.verifier": {
+      "type": "file",
+      "size": 2119,
+      "hash": "9291c5ab0d881885299e800d3e42a3fa5ff87ca2fa15d2ae0f8e699f7feb976d"
+    },
+    "register_voter.prover": {
+      "type": "file",
+      "size": 2823796,
+      "hash": "543f412e0f416cbec005e2ca01080973a15612aa59465b151bb6b2c195410bdc"
+    },
+    "register_voter.verifier": {
+      "type": "file",
+      "size": 2119,
+      "hash": "73cb24f780509019884e321efd2d97b6c75e8e7232cd87349452a159195000ea"
+    }
+  }
+}
