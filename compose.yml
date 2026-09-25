@@ -1,0 +1,9 @@
+services:
+  proof-server:
+    image: ghcr.io/midnight-ntwrk/proof-server:latest
+    container_name: ciphervote-proof-server
+    ports:
+      - "6300:6300"
+    environment:
+      - RUST_LOG=info
+    restart: unless-stopped

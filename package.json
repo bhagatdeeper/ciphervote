@@ -1,0 +1,29 @@
+{
+  "name": "ciphervote",
+  "version": "0.1.0",
+  "description": "CipherVote: Shielded Anonymous DAO Voting Protocol on Midnight Network",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "compile": "node scripts/compile-compact.mjs",
+    "test": "node scripts/test-runner.mjs",
+    "deploy:preprod": "node scripts/deploy.mjs preprod",
+    "deploy:preview": "node scripts/deploy.mjs preview",
+    "deploy:local": "node scripts/deploy.mjs local",
+    "env:up": "docker compose up -d --wait",
+    "env:down": "docker compose down"
+  },
+  "keywords": [
+    "midnight-network",
+    "compact",
+    "zero-knowledge",
+    "privacy",
+    "zk-snark",
+    "dao-governance",
+    "anonymous-voting"
+  ],
+  "author": "CipherVote Core Team",
+  "license": "Apache-2.0"
+}
