@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CipherVote — Shielded Anonymous DAO Voting | Midnight Preprod</title>
+  <meta name="description" content="Confidential zero-knowledge DAO governance and voting protocol built on Midnight Network with Compact smart contracts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Cosmic Background -->
+  <div class="cosmic-bg">
+    <div class="glow-orb orb-violet"></div>
+    <div class="glow-orb orb-cyan"></div>
+    <div class="glow-orb orb-emerald"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="app-layout">
+    <!-- Top Navigation Bar -->
+    <header class="app-header">
+      <div class="nav-container">
+        <div class="brand-group">
+          <div class="logo-shield">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="url(#shieldGrad)" stroke="#8b5cf6"/>
+              <path d="M9 12l2 2 4-4" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.2"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">CipherVote</span>
+            <span class="brand-tagline">Midnight Confidential Governance</span>
+          </div>
+        </div>
+
+        <div class="nav-meta">
+          <!-- Network Status -->
+          <div class="meta-chip network-chip">
+            <span class="beacon beacon-emerald"></span>
+            <span class="chip-label">Midnight Preprod</span>
+            <span class="chip-sub">Chain #160522</span>
+          </div>
+
+          <!-- Contract Badge -->
+          <div class="meta-chip contract-chip" id="contract-badge" title="Click to view contract on Explorer">
+            <svg class="chip-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+            <span class="code-font" id="contract-address-display">027a6078...acd26b</span>
+            <button class="copy-btn" id="copy-contract-btn" title="Copy Address">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- ZK Prover Badge -->
+          <div class="meta-chip zk-chip">
+            <span class="beacon beacon-cyan"></span>
+            <span class="chip-label">Groth16 ZK Prover</span>
+            <span class="chip-sub">Ready</span>
+          </div>
+
+          <!-- Lace Wallet Connect -->
+          <button class="btn btn-connect" id="connect-lace-btn">
+            <span class="btn-glow"></span>
+            <svg class="wallet-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="6" width="20" height="12" rx="2"/>
+              <circle cx="16" cy="12" r="2"/>
+              <path d="M6 12h2"/>
+            </svg>
+            <span id="connect-btn-text">Connect Lace Wallet</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-content">
+      <!-- Proposal Hero Banner -->
+      <section class="proposal-hero">
+        <div class="hero-header">
+          <div class="badge-row">
+            <span class="badge badge-active">
+              <span class="pulse-dot"></span> Active Voting Open
+            </span>
+            <span class="badge badge-shielded">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              Zero-Knowledge Shielded
+            </span>
+            <span class="badge badge-compact">Compact 0.26 Validated</span>
+          </div>
+          <h1 class="proposal-title" id="proposal-title">
+            CIPHERVOTE-001: Midnight Ecosystem Grant Allocation
+          </h1>
+          <p class="proposal-desc">
+            Disburse 250,000 DUST tokens to fund open-source confidential governance tooling, private voting primitives, and decentralized auditing frameworks on the Midnight Network. All ballots are evaluated off-chain through Compact Groth16 zero-knowledge circuits and committed via unlinkable nullifiers.
+          </p>
+        </div>
+
+        <div class="hero-stats-grid">
+          <div class="stat-box">
+            <span class="stat-label">VOTING WINDOW</span>
+            <div class="countdown-widget" id="countdown-timer">
+              <span class="time-block"><span class="time-val" id="timer-days">02</span><span class="time-unit">d</span></span>
+              <span class="time-sep">:</span>
+              <span class="time-block"><span class="time-val" id="timer-hours">14</span><span class="time-unit">h</span></span>
+              <span class="time-sep">:</span>
+              <span class="time-block"><span class="time-val" id="timer-mins">38</span><span class="time-unit">m</span></span>
+              <span class="time-sep">:</span>
+              <span class="time-block"><span class="time-val" id="timer-secs">12</span><span class="time-unit">s</span></span>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-label">QUORUM STATUS</span>
+            <div class="quorum-readout">
+              <span class="quorum-value" id="quorum-percent">76.4%</span>
+              <span class="quorum-target">of 500,000 DUST Quorum</span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="quorum-progress-bar" style="width: 76.4%;"></div>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-label">PROPOSAL IDENTIFIER</span>
+            <div class="code-font hash-snippet" id="proposal-id-display">0x5b2e69...551b81</div>
+            <span class="stat-sub">Snapshot Block #158,420</span>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-label">HISTORIC MERKLE ROOT</span>
+            <div class="code-font hash-snippet" id="merkle-root-display">0x93b7f1...e5a140</div>
+            <span class="stat-sub" id="eligible-voters-count">1,024 Eligible Voter Slots</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Public Ledger Live Tally Cards -->
+      <section class="tally-section">
+        <div class="section-title-row">
+          <div class="section-title-group">
+            <h2 class="section-heading">Public Ledger Live Tally</h2>
+            <span class="section-sub">Transparent on-chain tally counters updated in real-time via deliberate Compact disclose()</span>
+          </div>
+          <div class="tally-summary-chip">
+            <span class="code-font" id="total-ballots-display">1,894</span> Shielded Ballots Recorded
+          </div>
+        </div>
+
+        <div class="tally-cards-grid">
+          <!-- YES Card -->
+          <div class="tally-card tally-yes">
+            <div class="tally-header">
+              <span class="tally-badge yes-badge">
+                <span class="choice-dot dot-yes"></span> VOTE YES
+              </span>
+              <span class="tally-percent code-font" id="yes-percent">74.2%</span>
+            </div>
+            <div class="tally-power-row">
+              <span class="tally-power code-font" id="yes-power">3,420,180 DUST</span>
+            </div>
+            <div class="tally-bar-track">
+              <div class="tally-bar-fill fill-yes" id="yes-bar" style="width: 74.2%;"></div>
+            </div>
+            <div class="tally-footer">
+              <span class="footer-label">Verified ZK Proofs:</span>
+              <span class="code-font footer-val" id="yes-count">1,405</span>
+            </div>
+          </div>
+
+          <!-- NO Card -->
+          <div class="tally-card tally-no">
+            <div class="tally-header">
+              <span class="tally-badge no-badge">
+                <span class="choice-dot dot-no"></span> VOTE NO
+              </span>
+              <span class="tally-percent code-font" id="no-percent">20.4%</span>
+            </div>
+            <div class="tally-power-row">
+              <span class="tally-power code-font" id="no-power">940,320 DUST</span>
+            </div>
+            <div class="tally-bar-track">
+              <div class="tally-bar-fill fill-no" id="no-bar" style="width: 20.4%;"></div>
+            </div>
+            <div class="tally-footer">
+              <span class="footer-label">Verified ZK Proofs:</span>
+              <span class="code-font footer-val" id="no-count">386</span>
+            </div>
+          </div>
+
+          <!-- ABSTAIN Card -->
+          <div class="tally-card tally-abstain">
+            <div class="tally-header">
+              <span class="tally-badge abstain-badge">
+                <span class="choice-dot dot-abstain"></span> ABSTAIN
+              </span>
+              <span class="tally-percent code-font" id="abstain-percent">5.4%</span>
+            </div>
+            <div class="tally-power-row">
+              <span class="tally-power code-font" id="abstain-power">251,500 DUST</span>
+            </div>
+            <div class="tally-bar-track">
+              <div class="tally-bar-fill fill-abstain" id="abstain-bar" style="width: 5.4%;"></div>
+            </div>
+            <div class="tally-footer">
+              <span class="footer-label">Verified ZK Proofs:</span>
+              <span class="code-font footer-val" id="abstain-count">103</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Interaction Grid (Voting Station + Registration) -->
+      <section class="interaction-grid">
+        <!-- Confidential Voting Station -->
+        <div class="card voting-station-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <div class="icon-circle violet-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="card-title">Confidential Zero-Knowledge Ballot Cast</h3>
+                <p class="card-subtitle">Your ballot choice & wallet identity remain completely shielded via off-chain Compact witnesses</p>
+              </div>
+            </div>
+            <span class="privacy-guarantee-chip">
+              <span class="beacon beacon-emerald"></span> Zero Identity Linkage
+            </span>
+          </div>
+
+          <div class="card-body">
+            <!-- Step 1: Choice Selection -->
+            <div class="form-step">
+              <label class="step-label">
+                <span class="step-number">STEP 1</span>
+                <span>Select Your Ballot Choice</span>
+              </label>
+              <div class="choices-grid">
+                <button type="button" class="choice-option-btn choice-yes active" data-choice="1" id="choice-btn-1">
+                  <div class="choice-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </div>
+                  <div class="choice-text-wrap">
+                    <span class="choice-title">YES</span>
+                    <span class="choice-desc">Approve Ecosystem Grant</span>
+                  </div>
+                  <div class="radio-pip"></div>
+                </button>
+
+                <button type="button" class="choice-option-btn choice-no" data-choice="2" id="choice-btn-2">
+                  <div class="choice-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <line x1="18" y1="6" x2="6" y2="18"/>
+                      <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                  </div>
+                  <div class="choice-text-wrap">
+                    <span class="choice-title">NO</span>
+                    <span class="choice-desc">Reject Grant Proposal</span>
+                  </div>
+                  <div class="radio-pip"></div>
+                </button>
+
+                <button type="button" class="choice-option-btn choice-abstain" data-choice="3" id="choice-btn-3">
+                  <div class="choice-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                  </div>
+                  <div class="choice-text-wrap">
+                    <span class="choice-title">ABSTAIN</span>
+                    <span class="choice-desc">Neutral Quorum Count</span>
+                  </div>
+                  <div class="radio-pip"></div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2: Private Cryptographic Secrets -->
+            <div class="form-step">
+              <label class="step-label">
+                <span class="step-number">STEP 2</span>
+                <span>Off-Chain Witness Credentials (Client-Side Only)</span>
+              </label>
+
+              <!-- Voter Secret Field -->
+              <div class="field-group">
+                <div class="field-header">
+                  <span class="field-title">Voter Entitlement Secret (`voter_secret`)</span>
+                  <button type="button" class="field-action-btn" id="derive-lace-secret-btn">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 2l-2 2m-6 6l-3-3m5 5l2 2m-2-2l-3-3"/>
+                      <circle cx="7.5" cy="15.5" r="5.5"/>
+                    </svg>
+                    Auto-Derive from Lace Wallet
+                  </button>
+                </div>
+                <div class="input-wrap">
+                  <input type="password" id="voter-secret-input" class="text-input code-font" placeholder="Enter or auto-derive 32-byte voter credential secret...">
+                  <button type="button" class="input-toggle-btn" id="toggle-secret-visibility" title="Toggle visibility">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Blinding Salt Field -->
+              <div class="field-group">
+                <div class="field-header">
+                  <span class="field-title">Random Blinding Salt (`voter_salt`)</span>
+                  <button type="button" class="field-action-btn" id="regenerate-salt-btn">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                    </svg>
+                    Generate Fresh Salt
+                  </button>
+                </div>
+                <div class="input-wrap">
+                  <input type="text" id="voter-salt-input" class="text-input code-font" readonly>
+                </div>
+              </div>
+
+              <!-- Merkle Membership Readout -->
+              <div class="merkle-status-strip">
+                <div class="strip-item">
+                  <span class="strip-label">Merkle Membership:</span>
+                  <span class="strip-val verified-text" id="merkle-membership-status">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg> Verified (Leaf #418)
+                  </span>
+                </div>
+                <div class="strip-item">
+                  <span class="strip-label">Nullifier Status:</span>
+                  <span class="strip-val" id="nullifier-status">Unspent (Eligible)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Interactive ZK Circuit Pipeline Visualization -->
+            <div class="form-step">
+              <label class="step-label">
+                <span class="step-number">STEP 3</span>
+                <span>Zero-Knowledge Proof Pipeline</span>
+              </label>
+
+              <div class="pipeline-container">
+                <div class="pipeline-step" id="pipe-step-1">
+                  <div class="pipe-node">1</div>
+                  <div class="pipe-info">
+                    <span class="pipe-title">Witness Synthesis</span>
+                    <span class="pipe-sub">Extract secrets</span>
+                  </div>
+                </div>
+                <div class="pipe-connector" id="pipe-conn-1"></div>
+
+                <div class="pipeline-step" id="pipe-step-2">
+                  <div class="pipe-node">2</div>
+                  <div class="pipe-info">
+                    <span class="pipe-title">Groth16 Prover</span>
+                    <span class="pipe-sub">Generate SNARK</span>
+                  </div>
+                </div>
+                <div class="pipe-connector" id="pipe-conn-2"></div>
+
+                <div class="pipeline-step" id="pipe-step-3">
+                  <div class="pipe-node">3</div>
+                  <div class="pipe-info">
+                    <span class="pipe-title">Merkle Check</span>
+                    <span class="pipe-sub">Verify membership</span>
+                  </div>
+                </div>
+                <div class="pipe-connector" id="pipe-conn-3"></div>
+
+                <div class="pipeline-step" id="pipe-step-4">
+                  <div class="pipe-node">4</div>
+                  <div class="pipe-info">
+                    <span class="pipe-title">Ledger Record</span>
+                    <span class="pipe-sub">Commit nullifier</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="action-btn-wrap">
+              <button type="button" class="btn btn-cast-vote" id="cast-vote-btn">
+                <span class="btn-glow-large"></span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M9 12l2 2 4-4"/>
+                </svg>
+                <span id="cast-btn-text">Generate ZK Proof & Cast Shielded Ballot</span>
+              </button>
+            </div>
+
+            <!-- Live Status Alert Box -->
+            <div class="tx-status-box hidden" id="tx-status-box">
+              <div class="status-icon" id="status-icon"></div>
+              <div class="status-content">
+                <div class="status-heading" id="status-heading">Generating Zero-Knowledge Proof...</div>
+                <div class="status-message code-font" id="status-message">Synthesizing off-chain witness and computing constraints...</div>
+                <div class="status-meta" id="status-meta"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar: Voter Registration & Nullifier Stream -->
+        <aside class="sidebar-column">
+          <!-- Voter Enrollment Panel -->
+          <div class="card enrollment-card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <div class="icon-circle cyan-circle">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="8.5" cy="7" r="4"/>
+                    <line x1="20" y1="8" x2="20" y2="14"/>
+                    <line x1="23" y1="11" x2="17" y2="11"/>
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="card-title-sm">Voter Enrollment Gate</h4>
+                  <p class="card-subtitle-sm">Enroll commitment into Historic Merkle Tree</p>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="enroll-explainer">
+                Register an anonymous commitment to vote on active and future DAO governance motions without linking back to your Lace public key.
+              </p>
+              <div class="commitment-preview-box">
+                <span class="preview-label">Your Commitment Hash:</span>
+                <span class="code-font preview-val" id="my-commitment-hash">0x8a92f0...31c0e4</span>
+              </div>
+              <button type="button" class="btn btn-secondary full-width" id="register-voter-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="16"/>
+                  <line x1="8" y1="12" x2="16" y2="12"/>
+                </svg>
+                Register Voter Commitment
+              </button>
+            </div>
+          </div>
+
+          <!-- Recent Anonymous Ballots Feed -->
+          <div class="card feed-card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <div class="icon-circle emerald-circle">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="card-title-sm">Preprod Nullifier Stream</h4>
+                  <p class="card-subtitle-sm">Live shielded ballots confirmed on Midnight ledger</p>
+                </div>
+              </div>
+            </div>
+            <div class="card-body feed-body" id="nullifiers-feed">
+              <!-- Dynamically populated ballot items -->
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <span>CipherVote Protocol v0.2.0 • Powered by <strong>Midnight Network</strong> & <strong>Compact</strong></span>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/bhagatdeeper/ciphervote" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+          <span class="footer-sep">•</span>
+          <a href="https://explorer.preprod.midnight.network/contract/027a6078288bbc7e66b13686afd90b6dc84976da488a9f3906aef97624ddacd26b" target="_blank" rel="noopener noreferrer">Preprod Explorer</a>
+          <span class="footer-sep">•</span>
+          <a href="https://docs.midnight.network" target="_blank" rel="noopener noreferrer">Midnight Docs</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Lace Wallet Connection Modal -->
+  <div class="modal-backdrop hidden" id="wallet-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
+            <rect x="2" y="6" width="20" height="12" rx="2"/>
+            <circle cx="16" cy="12" r="2"/>
+          </svg>
+          <h3 class="modal-title">Connect Midnight Wallet</h3>
+        </div>
+        <button type="button" class="modal-close-btn" id="close-modal-btn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">
+          Connect your Lace wallet on Midnight Preprod to prove voter eligibility and cast confidential zero-knowledge ballots.
+        </p>
+
+        <div class="wallet-options">
+          <!-- Lace Extension Option -->
+          <button type="button" class="wallet-option-btn" id="connect-lace-extension-btn">
+            <div class="wallet-opt-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <div class="wallet-opt-text">
+              <span class="wallet-opt-name">Lace Wallet (Midnight Preprod)</span>
+              <span class="wallet-opt-sub" id="lace-detected-status">Detecting browser extension...</span>
+            </div>
+            <span class="wallet-arrow">→</span>
+          </button>
+
+          <!-- Preprod Dev Wallet Bridge (Instant Testnet Connection) -->
+          <button type="button" class="wallet-option-btn opt-dev" id="connect-dev-wallet-btn">
+            <div class="wallet-opt-icon icon-dev">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                <polyline points="2 17 12 22 22 17"/>
+                <polyline points="2 12 12 17 22 12"/>
+              </svg>
+            </div>
+            <div class="wallet-opt-text">
+              <span class="wallet-opt-name">Lace Preprod Testnet Bridge</span>
+              <span class="wallet-opt-sub">Instant zero-setup testnet keypair with 10,000 tDUST</span>
+            </div>
+            <span class="pill-instant">INSTANT</span>
+          </button>
+        </div>
+
+        <div class="modal-footer-note">
+          <span>Need Lace? <a href="https://www.lace.io/" target="_blank" rel="noopener noreferrer">Install Lace Extension for Midnight</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

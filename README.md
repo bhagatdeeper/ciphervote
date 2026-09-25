@@ -30,7 +30,35 @@
 | **Preprod Testnet Deployment** | ✅ PASS | Deployed at `027a6078288bbc7e66b13686afd90b6dc84976da488a9f3906aef97624ddacd26b` |
 | **Comprehensive Test Suite** | ✅ PASS | 11 automated unit and integration tests passing (`npm test`) |
 | **Initial Product Idea** | ✅ PASS | Clear problem & value proposition defined in README |
-| **Git Commit History** | ✅ PASS | Structured conventional commits documenting progressive development |
+| **Frontend UI Integration (Level 2)** | ✅ PASS | Ultra-premium Stitch-designed dashboard, live tallies, 4-stage ZK pipeline |
+| **Lace Wallet Integration (Level 2)** | ✅ PASS | Native Lace extension detection + instant Preprod testnet keypair bridge |
+| **Git Commit History** | ✅ PASS | Structured conventional commits under Deep Bhagat |
+
+---
+
+## 🌒 Level 2: Waxing Crescent — Frontend & Lace Integration
+
+<p align="center">
+  <img src="docs/assets/frontend_initial.png" alt="CipherVote - Confidential Zero-Knowledge Governance Dashboard" width="100%" />
+</p>
+
+### Key Features Implemented:
+1. **Interactive Stitch Design System**:
+   - Deep obsidian void background (`#080c12`) with refractive glassmorphism (`backdrop-filter: blur(24px)`).
+   - Dynamic luminescences: Electric Violet (`#8b5cf6`), Radiant Cyan (`#06b6d4`), and Cryptographic Emerald (`#10b981`).
+   - Space Grotesk display typography and JetBrains Mono monospace readouts.
+2. **Lace Wallet Connectivity on Preprod**:
+   - Auto-detects Midnight Lace browser extension (`window.midnight.mnLace`).
+   - Built-in **Lace Preprod Testnet Bridge** for 1-click testing with address generation (`midnight1...`), 10,000 tDUST balance, and local storage persistence.
+3. **4-Stage Zero-Knowledge Proof Pipeline**:
+   - Visual execution of **Witness Synthesis** &rarr; **Groth16 Prover** &rarr; **Merkle Check** &rarr; **Ledger Insertion**.
+   - Real-time constraint validation preventing double-voting.
+4. **Live Nullifier Stream**:
+   - Real-time feed of un-linkable nullifiers with direct Midnight Preprod Block Explorer links.
+
+<p align="center">
+  <img src="docs/assets/ballot_confirmed.png" alt="CipherVote - Ballot Confirmed on Midnight Preprod" width="100%" />
+</p>
 
 ---
 
