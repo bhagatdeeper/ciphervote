@@ -10,6 +10,8 @@
 - **Target Network**: Midnight Network (Preprod Testnet & Mainnet)
 - **Programming Language**: Compact `0.26` / `0.34`
 - **Smart Contract Address (Preprod)**: `027a6078288bbc7e66b13686afd90b6dc84976da488a9f3906aef97624ddacd26b`
+- **Live Demo Video (Google Drive)**: [https://drive.google.com/file/d/1FgUn5BlqVxozrA-vSZoiNx2r7KzVocDv/view?usp=sharing](https://drive.google.com/file/d/1FgUn5BlqVxozrA-vSZoiNx2r7KzVocDv/view?usp=sharing)
+- **Live Web Application**: [https://bhagatdeeper.github.io/ciphervote/](https://bhagatdeeper.github.io/ciphervote/)
 - **GitHub Repository**: [https://github.com/bhagatdeeper/ciphervote](https://github.com/bhagatdeeper/ciphervote)
 - **Author**: Deep Bhagat ([@bhagatdeeper](https://github.com/bhagatdeeper))
 

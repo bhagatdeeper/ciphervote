@@ -12,6 +12,7 @@
   <img src="https://img.shields.io/badge/Tests-17%20Passed-success?style=for-the-badge" alt="Tests Passing" />
 </p>
 
+> 🎥 **Live Demo Video Walkthrough**: [Watch on Google Drive](https://drive.google.com/file/d/1FgUn5BlqVxozrA-vSZoiNx2r7KzVocDv/view?usp=sharing)  
 > 🌐 **Live Web Application**: [https://bhagatdeeper.github.io/ciphervote/](https://bhagatdeeper.github.io/ciphervote/)  
 > 🔒 **Deployed Midnight Preprod Contract**: [`027a6078288bbc7e66b13686afd90b6dc84976da488a9f3906aef97624ddacd26b`](https://explorer.preprod.midnight.network/contract/027a6078288bbc7e66b13686afd90b6dc84976da488a9f3906aef97624ddacd26b)
 

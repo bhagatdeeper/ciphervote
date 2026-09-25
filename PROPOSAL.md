@@ -16,6 +16,8 @@
   - JSON receipt export and cryptographic proof backup.
 - **Deployment**:
   - Live on Midnight Preprod at contract address `027a6078288bbc7e66b13686afd90b6dc84976da488a9f3906aef97624ddacd26b`.
+  - Live Web App: [https://bhagatdeeper.github.io/ciphervote/](https://bhagatdeeper.github.io/ciphervote/)
+  - Live Demo Video Walkthrough: [https://drive.google.com/file/d/1FgUn5BlqVxozrA-vSZoiNx2r7KzVocDv/view?usp=sharing](https://drive.google.com/file/d/1FgUn5BlqVxozrA-vSZoiNx2r7KzVocDv/view?usp=sharing)
 
 ### 3. Who is your target user and what is your go-to-market strategy?
 - **Target Users**:
