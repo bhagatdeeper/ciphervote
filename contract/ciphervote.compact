@@ -1,0 +1,124 @@
+pragma language_version >= 0.26.0;
+
+import CompactStandardLibrary;
+
+// ============================================================================
+// CipherVote: Shielded Anonymous DAO Voting Protocol on Midnight Network
+// ============================================================================
+//
+// Architectural Model:
+// 1. PUBLIC LEDGER STATE:
+//    - registeredVoters: Historic Merkle tree storing all enrolled voter commitments.
+//    - usedNullifiers: Set of revealed nullifiers, preventing double-voting.
+//    - yesVotes: Public counter tracking total affirmative votes.
+//    - noVotes: Public counter tracking total negative votes.
+//    - abstainVotes: Public counter tracking total abstain votes.
+//    - totalVoted: Public counter tracking total votes cast.
+//    - totalRegistered: Public counter tracking total voters registered.
+//    - proposalId: Sealed unique identifier of the active DAO proposal.
+//    - adminPk: Public key of the DAO governance authority.
+//
+// 2. PRIVATE WITNESSES:
+//    - voter_secret(): Private entitlement key held only by the DAO voter.
+//    - voter_salt(): Random blinding factor ensuring commitment confidentiality.
+//    - voter_path(): Off-chain Merkle membership proof (leaf index & siblings).
+//
+// 3. DELIBERATE USE OF disclose():
+//    - The voter proves membership in the snapshot inside the ZK circuit.
+//    - Only the un-linkable nullifier and the public vote choice are disclosed.
+//    - Secret keys, salts, and voter identity remain 100% private to the user.
+// ============================================================================
+
+export ledger registeredVoters: HistoricMerkleTree<10, Bytes<32>>;
+export ledger usedNullifiers: Set<Bytes<32>>;
+export ledger yesVotes: Counter;
+export ledger noVotes: Counter;
+export ledger abstainVotes: Counter;
+export ledger totalVoted: Counter;
+export ledger totalRegistered: Counter;
+export sealed ledger proposalId: Bytes<32>;
+export sealed ledger adminPk: Bytes<32>;
+
+// --- Private Witnesses (off-chain client evaluation) ---
+witness voter_secret(): Bytes<32>;
+witness voter_salt(): Bytes<32>;
+witness voter_path(commitment: Bytes<32>): MerkleTreePath<10, Bytes<32>>;
+
+// --- Cryptographic Circuit Helpers ---
+circuit derive_voter_commitment(secret: Bytes<32>, salt: Bytes<32>): Bytes<32> {
+  return persistentCommit<Vector<2, Bytes<32>>>(
+    [pad(32, "ciphervote:commit:"), secret],
+    salt
+  );
+}
+
+circuit derive_vote_nullifier(secret: Bytes<32>, propId: Bytes<32>): Bytes<32> {
+  return persistentCommit<Vector<2, Bytes<32>>>(
+    [pad(32, "ciphervote:nullify:"), secret],
+    propId
+  );
+}
+
+// --- Constructor ---
+constructor(admin: Bytes<32>, proposal: Bytes<32>) {
+  adminPk = disclose(admin);
+  proposalId = disclose(proposal);
+}
+
+// --- Exported Circuits ---
+
+// Register an eligible voter commitment into the Merkle tree.
+// The commitment is recorded publicly, but the underlying secret remains hidden.
+export circuit register_voter(): [] {
+  const secret = voter_secret();
+  const salt = voter_salt();
+  const commitment = derive_voter_commitment(secret, salt);
+
+  registeredVoters.insert(commitment);
+  totalRegistered.increment(1);
+}
+
+// Cast an anonymous ballot privately using Zero-Knowledge proofs.
+// Choice values: 1 = YES, 2 = NO, 3 = ABSTAIN
+export circuit cast_ballot(choice: Uint<8>): [] {
+  // Deliberately disclose choice for public tally aggregation
+  const publicChoice = disclose(choice);
+
+  // Validate ballot choice bounds
+  assert(publicChoice >= 1 && publicChoice <= 3, "Invalid vote choice: must be 1 (Yes), 2 (No), or 3 (Abstain)");
+
+  const secret = voter_secret();
+  const salt = voter_salt();
+  const commitment = derive_voter_commitment(secret, salt);
+
+  // Retrieve Merkle proof from private witness
+  const path = voter_path(commitment);
+
+  // Soundness constraint: ensure proof matches this commitment
+  assert(path.leaf == commitment, "Merkle path leaf does not match voter commitment");
+
+  // Verify the commitment belongs to the valid historic Merkle tree
+  assert(
+    registeredVoters.checkRoot(disclose(merkleTreePathRoot<10, Bytes<32>>(path))),
+    "Voter is not registered in authorized voter tree"
+  );
+
+  // Derive the proposal-scoped unlinkable nullifier
+  const nullifier = derive_vote_nullifier(secret, proposalId);
+
+  // Ensure voter has not already voted on this proposal (double-voting protection)
+  assert(disclose(!usedNullifiers.member(disclose(nullifier))), "Voter has already cast a ballot on this proposal");
+
+  // Deliberately record the nullifier in public state
+  usedNullifiers.insert(disclose(nullifier));
+  totalVoted.increment(1);
+
+  // Update public tally based on disclosed vote choice
+  if (publicChoice == 1) {
+    yesVotes.increment(1);
+  } else if (publicChoice == 2) {
+    noVotes.increment(1);
+  } else {
+    abstainVotes.increment(1);
+  }
+}
