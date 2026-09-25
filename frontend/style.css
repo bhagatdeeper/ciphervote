@@ -1268,6 +1268,18 @@ body {
   margin-top: 0.25rem;
 }
 
+.btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.status-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
 /* Sidebar Column */
 .sidebar-column {
   display: flex;

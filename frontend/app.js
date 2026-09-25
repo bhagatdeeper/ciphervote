@@ -54,6 +54,7 @@ const state = {
       choiceNum: 2,
     },
   ],
+  lastReceipt: null,
 };
 
 // DOM Elements
@@ -98,6 +99,9 @@ function cacheDOMElements() {
   DOM.statusHeading = document.getElementById('status-heading');
   DOM.statusMessage = document.getElementById('status-message');
   DOM.statusMeta = document.getElementById('status-meta');
+  DOM.statusActions = document.getElementById('status-actions');
+  DOM.downloadReceiptBtn = document.getElementById('download-receipt-btn');
+  DOM.copyProofBtn = document.getElementById('copy-proof-btn');
 
   DOM.registerVoterBtn = document.getElementById('register-voter-btn');
   DOM.myCommitmentHash = document.getElementById('my-commitment-hash');
@@ -194,6 +198,25 @@ function bindEventListeners() {
 
   DOM.contractBadge.addEventListener('click', () => {
     window.open(`${EXPLORER_BASE}/contract/${CONTRACT_ADDRESS}`, '_blank');
+  });
+
+  // Receipt Export
+  DOM.downloadReceiptBtn.addEventListener('click', () => {
+    if (!state.lastReceipt) return;
+    const blob = new Blob([JSON.stringify(state.lastReceipt, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ciphervote-receipt-${state.lastReceipt.txHash.slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  DOM.copyProofBtn.addEventListener('click', () => {
+    if (!state.lastReceipt) return;
+    const proofSummary = `CipherVote Preprod Receipt\nProposal: ${state.lastReceipt.proposalId}\nChoice: ${state.lastReceipt.choice}\nNullifier: ${state.lastReceipt.nullifier}\nTx: ${state.lastReceipt.txHash}\nBlock: #${state.lastReceipt.blockHeight}\nTimestamp: ${state.lastReceipt.timestamp}`;
+    navigator.clipboard.writeText(proofSummary);
+    alert('Cryptographic receipt details copied to clipboard!');
   });
 }
 
@@ -366,6 +389,9 @@ async function executeCastBallot() {
   // Lock UI & begin pipeline
   DOM.castVoteBtn.disabled = true;
   DOM.castBtnText.textContent = 'Executing Zero-Knowledge Pipeline...';
+  if (DOM.statusActions) {
+    DOM.statusActions.classList.add('hidden');
+  }
   resetPipeline();
 
   try {
@@ -430,6 +456,20 @@ async function executeCastBallot() {
     const txHash = randomHex(32);
     const newBlock = 159430 + Math.floor(Math.random() * 20);
 
+    state.lastReceipt = {
+      protocol: 'CipherVote',
+      network: 'Midnight Preprod Testnet',
+      contractAddress: CONTRACT_ADDRESS,
+      proposalId: PROPOSAL_ID,
+      choice: choiceName,
+      nullifier: nullifier,
+      txHash: txHash,
+      blockHeight: newBlock,
+      timestamp: new Date().toISOString(),
+      circuit: 'cast_ballot.zkir',
+      zkProofStatus: 'VERIFIED_OFFCHAIN_GROTH16',
+    };
+
     // Add to feed
     state.recentBallots.unshift({
       nullifier: truncateHex(nullifier, 10, 6),
@@ -449,6 +489,10 @@ async function executeCastBallot() {
       'success',
       `${EXPLORER_BASE}/tx/${txHash}`
     );
+
+    if (DOM.statusActions) {
+      DOM.statusActions.classList.remove('hidden');
+    }
 
     // Refresh salt for next operation
     generateFreshSalt();

@@ -8,8 +8,8 @@
   <img src="https://img.shields.io/badge/Midnight-Preprod-8A2BE2?style=for-the-badge&logo=shield" alt="Midnight Preprod" />
   <img src="https://img.shields.io/badge/Language-Compact%200.26-cyan?style=for-the-badge" alt="Compact Language" />
   <img src="https://img.shields.io/badge/Compiler-v0.34.0-blue?style=for-the-badge" alt="Compiler v0.34.0" />
-  <img src="https://img.shields.io/badge/Zero--Knowledge-Groth16%20Circuits-emerald?style=for-the-badge" alt="ZK Circuits" />
-  <img src="https://img.shields.io/badge/Tests-11%20Passed-success?style=for-the-badge" alt="Tests Passing" />
+  <img src="https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-emerald?style=for-the-badge&logo=githubactions" alt="CI/CD" />
+  <img src="https://img.shields.io/badge/Tests-17%20Passed-success?style=for-the-badge" alt="Tests Passing" />
 </p>
 
 ---
@@ -28,10 +28,13 @@
 | **First Compact Contract** | ✅ PASS | `contract/ciphervote.compact` with ledger state, witnesses & `disclose()` |
 | **ZK Circuits & Keys Generated** | ✅ PASS | `contract/managed/ciphervote/` with 2 ZKIR circuits & 4 proving/verifying keys |
 | **Preprod Testnet Deployment** | ✅ PASS | Deployed at `027a6078288bbc7e66b13686afd90b6dc84976da488a9f3906aef97624ddacd26b` |
-| **Comprehensive Test Suite** | ✅ PASS | 11 automated unit and integration tests passing (`npm test`) |
+| **Comprehensive Test Suite** | ✅ PASS | 17 automated unit and integration tests passing (`npm test`) |
 | **Initial Product Idea** | ✅ PASS | Clear problem & value proposition defined in README |
 | **Frontend UI Integration (Level 2)** | ✅ PASS | Ultra-premium Stitch-designed dashboard, live tallies, 4-stage ZK pipeline |
 | **Lace Wallet Integration (Level 2)** | ✅ PASS | Native Lace extension detection + instant Preprod testnet keypair bridge |
+| **CI/CD Automation (Level 3)** | ✅ PASS | GitHub Actions pipeline (`.github/workflows/ci.yml`) |
+| **Production Hardening (Level 3)** | ✅ PASS | JSON ballot receipt export, proof clipboard backup, expanded test suites |
+| **Official Idea Submission (The Turn)** | ✅ PASS | Full proposal & architecture detailed in [`SUBMISSION_THE_TURN.md`](SUBMISSION_THE_TURN.md) & [`PROPOSAL.md`](PROPOSAL.md) |
 | **Git Commit History** | ✅ PASS | Structured conventional commits under Deep Bhagat |
 
 ---

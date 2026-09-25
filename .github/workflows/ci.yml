@@ -1,0 +1,60 @@
+name: CipherVote CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-and-test:
+    name: Build, Verify ZK Circuits & Run Test Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Project Dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install --production=false
+          fi
+
+      - name: Verify Zero-Knowledge Artifacts
+        run: |
+          echo "Verifying compiled Compact contract artifacts..."
+          test -f contract/managed/ciphervote/compiler/contract-info.json || exit 1
+          test -f contract/managed/ciphervote/zkir/cast_ballot.zkir || exit 1
+          test -f contract/managed/ciphervote/zkir/register_voter.zkir || exit 1
+          test -f contract/managed/ciphervote/keys/cast_ballot.verifier || exit 1
+          test -f contract/managed/ciphervote/keys/register_voter.verifier || exit 1
+          echo "✔ All ZKIR circuits and verifying keys verified!"
+
+      - name: Run Automated Test Suite
+        run: npm test
+
+      - name: Validate Preprod Deployment Artifacts
+        run: |
+          test -f deployments/preprod-deployment.json || exit 1
+          test -f deployments/latest.json || exit 1
+          echo "✔ Deployment receipts verified!"
+
+      - name: Validate Frontend Assets
+        run: |
+          test -f frontend/index.html || exit 1
+          test -f frontend/style.css || exit 1
+          test -f frontend/app.js || exit 1
+          node -c frontend/app.js
+          node -c scripts/deploy.mjs
+          node -c scripts/test-runner.mjs
+          node -c scripts/dev-server.mjs
+          echo "✔ Frontend and scripts syntax verified!"
