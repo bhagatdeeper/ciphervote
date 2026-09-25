@@ -1,0 +1,22 @@
+{
+  "contractName": "CipherVote",
+  "network": "preprod",
+  "contractAddress": "027a6078288bbc7e66b13686afd90b6dc84976da488a9f3906aef97624ddacd26b",
+  "txHash": "0x8d3cfdd9cd5c6c9030c6de5b2aedaf0cfca8b53deafb24c6be242d7c91a745fa",
+  "blockHeight": 159419,
+  "deployedAt": "2026-09-25T10:02:33.546Z",
+  "adminPk": "0x0e8bd440bbe72567ff04fa5585c50d16759fa702c4a72571b3634a2aa61302cb",
+  "proposalId": "0x5b2e69659d77697128aaaa817d32cf6741ef43e36927f7906210d7fab1551b81",
+  "circuits": [
+    "register_voter",
+    "cast_ballot"
+  ],
+  "endpoints": {
+    "networkId": "preprod",
+    "indexer": "https://indexer.preprod.midnight.network/api/v4/graphql",
+    "indexerWS": "wss://indexer.preprod.midnight.network/api/v4/graphql/ws",
+    "node": "https://rpc.preprod.midnight.network",
+    "proofServer": "http://127.0.0.1:6300",
+    "explorerUrl": "https://explorer.preprod.midnight.network"
+  }
+}
