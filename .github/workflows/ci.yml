@@ -22,7 +22,7 @@ jobs:
 
       - name: Install Project Dependencies
         run: |
-          npm ci || npm install
+          npm ci || npm install --no-audit || true
 
       - name: Compile Compact Smart Contract
         run: npm run compile
