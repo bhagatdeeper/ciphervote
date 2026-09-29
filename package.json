@@ -10,12 +10,31 @@
     "dev": "node scripts/dev-server.mjs",
     "start": "node scripts/dev-server.mjs",
     "compile": "node scripts/compile-compact.mjs",
-    "test": "node scripts/test-runner.mjs",
+    "test": "node --test test/*.test.js && node scripts/test-runner.mjs",
     "deploy:preprod": "node scripts/deploy.mjs preprod",
     "deploy:preview": "node scripts/deploy.mjs preview",
     "deploy:local": "node scripts/deploy.mjs local",
     "env:up": "docker compose up -d --wait",
     "env:down": "docker compose down"
+  },
+  "dependencies": {
+    "@midnight-ntwrk/compact-runtime": "^0.19.0",
+    "@midnight-ntwrk/dapp-connector-api": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-contracts": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-http-client-proof-provider": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-indexer-public-data-provider": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-level-private-state-provider": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-network-id": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-network-provider": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-node-zk-config-provider": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-protocol": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-types": "^4.1.1",
+    "@midnight-ntwrk/midnight-js-utils": "^4.1.1",
+    "@midnight-ntwrk/testkit-js": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "typescript": "^5.7.3"
   },
   "keywords": [
     "midnight-network",
@@ -26,6 +45,6 @@
     "dao-governance",
     "anonymous-voting"
   ],
-  "author": "CipherVote Core Team",
+  "author": "Deep Bhagat <300824877+bhagatdeeper@users.noreply.github.com>",
   "license": "Apache-2.0"
 }

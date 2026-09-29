@@ -33,7 +33,7 @@ The palette is rooted in cold, deep cosmic obsidian foundations, contrasted with
    - Network status badge: `Midnight Preprod Testnet` with pulsing emerald beacon
    - Live Contract address: `027a6078288bbc7e66b13686afd90b6dc84976da488a9f3906aef97624ddacd26b` (with copy & explorer link)
    - ZK Proof Server status: `http://127.0.0.1:6300 (Connected)`
-   - **Lace Wallet Integration button**: "Connect Lace Wallet" with simulated / live Midnight Preprod wallet bridge, address preview, and balance.
+   - **Lace Wallet Integration button**: "Connect Lace Wallet" with direct Preprod testnet keypair bridge / live Midnight Preprod Lace extension, address preview, and balance.
 
 2. **Active Governance Motion Hero:**
    - Motion: `CIPHERVOTE-PROPOSAL-001: Midnight Ecosystem Grant Allocation ($250,000 DUST)`

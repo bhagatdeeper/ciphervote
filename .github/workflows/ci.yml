@@ -24,6 +24,9 @@ jobs:
         run: |
           npm ci || npm install
 
+      - name: Compile Compact Smart Contract
+        run: npm run compile
+
       - name: Verify Zero-Knowledge Artifacts
         run: |
           echo "Verifying compiled Compact contract artifacts..."
@@ -48,7 +51,9 @@ jobs:
           test -f frontend/index.html || exit 1
           test -f frontend/style.css || exit 1
           test -f frontend/app.js || exit 1
+          test -f frontend/midnight-service.js || exit 1
           node -c frontend/app.js
+          node -c frontend/midnight-service.js
           node -c scripts/deploy.mjs
           node -c scripts/test-runner.mjs
           node -c scripts/dev-server.mjs

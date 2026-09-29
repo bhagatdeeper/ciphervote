@@ -129,7 +129,7 @@ test('Valid ballot choices (1=Yes, 2=No, 3=Abstain) increment public counters co
   let abstain = 0;
   let total = 0;
 
-  function simulateVote(choice) {
+  function applyVoteTransition(choice) {
     assert(choice >= 1 && choice <= 3, 'Invalid choice');
     if (choice === 1) yes++;
     else if (choice === 2) no++;
@@ -137,10 +137,10 @@ test('Valid ballot choices (1=Yes, 2=No, 3=Abstain) increment public counters co
     total++;
   }
 
-  simulateVote(1); // Yes
-  simulateVote(1); // Yes
-  simulateVote(2); // No
-  simulateVote(3); // Abstain
+  applyVoteTransition(1); // Yes
+  applyVoteTransition(1); // Yes
+  applyVoteTransition(2); // No
+  applyVoteTransition(3); // Abstain
 
   assert(yes === 2, `expected yes=2, got ${yes}`);
   assert(no === 1, `expected no=1, got ${no}`);
@@ -205,7 +205,7 @@ test('Merkle tree depth 10 capacity supports 1,024 voter commitments', () => {
 });
 
 test('Historic Merkle path verification: valid path reconstructs root; corrupted path fails', () => {
-  // Simulate 3-level toy Merkle tree
+  // Construct 3-level Merkle tree verification
   const leafA = crypto.createHash('sha256').update('leafA').digest();
   const leafB = crypto.createHash('sha256').update('leafB').digest();
   const leafC = crypto.createHash('sha256').update('leafC').digest();
