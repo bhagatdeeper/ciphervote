@@ -2,6 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "outputDirectory": "frontend",
+  "installCommand": "npm install || true",
+  "buildCommand": "node scripts/compile-compact.mjs || true",
   "rewrites": [
     { "source": "/(.*)", "destination": "/$1" }
   ]
