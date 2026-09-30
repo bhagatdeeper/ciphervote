@@ -336,12 +336,3 @@ Explorer Link    : https://explorer.preprod.midnight.network/contract/027a607828
 ├── compose.yml              # Docker Compose proof-server service
 └── package.json             # Midnight.js SDK dependencies, engines & scripts
 ```
-
----
-
-## 🗺️ Next Steps (Lunar Roadmap)
-- **🌒 Level 2 (Waxing Crescent)**: Frontend Integration & Lace Wallet connection on Preprod.
-- **🌓 Level 3 (First Quarter)**: Production-grade dApp, CI/CD pipeline, and official Idea Submission.
-- **🌔 Level 4 (Waxing Gibbous)**: Live MVP deployment with public product documentation.
-- **🌕 Level 5 (Full Moon)**: Onboard 50 Preprod users and establish feedback loops.
-- **🌝 Level 6 (Supermoon)**: Midnight Mainnet Launch with brand assets and real governance adoption.
