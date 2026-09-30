@@ -52,8 +52,10 @@ jobs:
           test -f frontend/style.css || exit 1
           test -f frontend/app.js || exit 1
           test -f frontend/midnight-service.js || exit 1
+          test -f frontend/contract-client.js || exit 1
           node -c frontend/app.js
           node -c frontend/midnight-service.js
+          node -c frontend/contract-client.js
           node -c scripts/deploy.mjs
           node -c scripts/test-runner.mjs
           node -c scripts/dev-server.mjs

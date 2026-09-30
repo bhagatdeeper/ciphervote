@@ -4,9 +4,7 @@
  * Connects frontend directly to Midnight Preprod, Proof Server, and Compact Contract Circuits
  */
 
-import { Contract, ledger, pureCircuits, expectedVk, zkConfigPath } from '../contract/index.js';
-import { witnesses, createCipherVotePrivateState } from '../contract/witnesses.js';
-import { PREPROD_CONFIG } from '../src/config.js';
+import { Contract, witnesses, createCipherVotePrivateState, PREPROD_CONFIG, zkConfigPath } from './contract-client.js';
 
 export class MidnightClientService {
   constructor(config = PREPROD_CONFIG) {

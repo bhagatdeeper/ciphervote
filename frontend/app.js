@@ -4,7 +4,7 @@
  * Developed by Deep Bhagat
  */
 
-import { Contract } from '../contract/index.js';
+import { Contract } from './contract-client.js';
 import { midnightClient } from './midnight-service.js';
 
 // Contract & Network Config
